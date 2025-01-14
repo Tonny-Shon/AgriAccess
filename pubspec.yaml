@@ -1,0 +1,94 @@
+name: agriaccess
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+#  -----------------------------PACAKEGES-------------------------------
+dependencies:
+  cached_network_image: ^3.4.1
+  carousel_slider: ^5.0.0
+  cloud_firestore: ^5.4.4
+  #connectivity_plus: ^6.1.0
+  crypto: ^3.0.6
+  cupertino_icons: ^1.0.6
+  firebase_core: ^3.6.0
+  firebase_storage: ^12.3.3
+  flutter:
+    sdk: flutter
+  flutter_launcher_icons: ^0.14.1
+  get: ^4.6.6
+  get_storage: ^2.0.3
+  http: ^1.1.0
+  iconsax: ^0.0.8
+  image_picker: ^1.1.2
+  internet_connection_checker: ^1.0.0+1
+  intl: ^0.20.1
+  logger: ^2.0.1
+  readmore: ^3.0.0
+  shared_preferences: ^2.3.2
+  shimmer: ^3.0.0
+  smooth_page_indicator: ^1.1.0
+  url_launcher: ^6.1.12
+  uuid: ^4.5.1
+#  video_player: ^2.7.16
+  video_player: ^2.9.2
+  better_player: ^0.0.84
+  flutter_native_splash: ^2.4.1
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/logos/AgriAccess.png
+  android: true
+  ios: true     
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+   
+
+
+  # ------LOCAL ASSETS------
+  assets:
+    - assets/logos/
+    - assets/images/on_boarding_images/
+    - assets/images/animations/
+    - assets/icons/categories/
+    - assets/images/banners/
+    - assets/images/products/
+    - assets/images/
+
+# ------LOCAL FONTS------
+fonts:
+  - family: Poppins
+    fonts:
+      - asset: assets/fonts/Poppins-Light.ttf
+        weight: 300
+      - asset: assets/fonts/Poppins-Regular.ttf
+        weight: 400
+      - asset: assets/fonts/Poppins-Italic.ttf
+        style: italic
+      - asset: assets/fonts/Poppins-Medium.ttf
+        weight: 500
+      - asset: assets/fonts/Poppins-MediumItalic.ttf
+        weight: 500
+        style: italic
+      - asset: assets/fonts/Poppins-SemiBold.ttf
+        weight: 600
+      - asset: assets/fonts/Poppins-Bold.ttf
+        weight: 800
+
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/logos/AgriAccess.png # Replace with your actual icon path

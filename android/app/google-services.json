@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "257128199275",
+    "project_id": "agri-access-app-7f1d8",
+    "storage_bucket": "agri-access-app-7f1d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257128199275:android:a4ae2482b8033fd67aed2e",
+        "android_client_info": {
+          "package_name": "com.example.marketing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmZl2OKMA1JDm-Nt6FFTGqR6dhlXBHyoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

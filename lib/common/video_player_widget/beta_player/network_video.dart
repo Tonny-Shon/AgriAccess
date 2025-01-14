@@ -1,0 +1,70 @@
+import 'package:flutter/material.dart';
+import 'package:better_player/better_player.dart';
+
+class NetworkVideoScreen extends StatefulWidget {
+  final String videoUrl;
+
+  const NetworkVideoScreen({super.key, required this.videoUrl});
+
+  @override
+  State<NetworkVideoScreen> createState() => _NetworkVideoScreenState();
+}
+
+class _NetworkVideoScreenState extends State<NetworkVideoScreen> {
+  BetterPlayerController? _betterPlayerController;
+  bool _isVideoLoadingFailed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializePlayer();
+  }
+
+  void _initializePlayer() {
+    final dataSource = BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      widget.videoUrl,
+    );
+
+    _betterPlayerController = BetterPlayerController(
+      const BetterPlayerConfiguration(
+        aspectRatio: 16 / 9,
+        autoPlay: false,
+        looping: false,
+      ),
+      betterPlayerDataSource: dataSource,
+    );
+
+    _betterPlayerController!.addEventsListener(_handleVideoEvent);
+  }
+
+  void _handleVideoEvent(BetterPlayerEvent event) {
+    if (event.betterPlayerEventType == BetterPlayerEventType.exception) {
+      setState(() {
+        _isVideoLoadingFailed = true;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _betterPlayerController?.removeEventsListener(_handleVideoEvent);
+    _betterPlayerController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _isVideoLoadingFailed
+        ? const Center(
+            child: Text(
+              'Failed to load video. Please try again later.',
+              style: TextStyle(color: Colors.red),
+            ),
+          )
+        : SizedBox(
+            height: 200,
+            child: BetterPlayer(controller: _betterPlayerController!),
+          );
+  }
+}
