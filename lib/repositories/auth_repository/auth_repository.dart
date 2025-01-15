@@ -102,6 +102,7 @@ class AuthRepository extends GetxController {
                   return "Category does not exist";
                 }
                 String role = categoryDoc['Name'];
+
                 switch (role) {
                   case 'Farmer':
                     Get.offAll(() => const FarmerNavigationMenu());

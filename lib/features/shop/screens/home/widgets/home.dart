@@ -16,6 +16,7 @@ import '../../../../../models/post_user_model/post_user_model.dart';
 import '../../../../../models/product_model/product_model.dart';
 import '../../../../../models/user_model/user_model.dart';
 import '../../../../../navigation_menus/input_supplier_menu/widgets/add_product_screen.dart';
+import '../../../../../screens/filter_posts/filter_posts.dart';
 import '../../../../authentication/controllers/onboarding/category_controller/category_controller.dart';
 import '../../../../authentication/screens/create_post/create_post.dart';
 
@@ -125,8 +126,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Row(
                           children: [
-                            const Expanded(
+                            Expanded(
                               child: TSearchContainer(
+                                onTap: () =>
+                                    Get.to(() => const ESearchScreen()),
                                 text: 'Search products',
                                 icon: Iconsax.search_normal,
                               ),

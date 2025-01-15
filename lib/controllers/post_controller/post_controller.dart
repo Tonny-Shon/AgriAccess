@@ -25,8 +25,10 @@ class PostController extends GetxController {
   final imagePath = ''.obs;
   //var posts = <PostUserModel>[].obs;
   var postUserDetailsList = <PostUserModel>[].obs;
+  RxList<PostUserModel> searchResults = <PostUserModel>[].obs;
 
   final descriptionController = TextEditingController();
+  final searchController = TextEditingController();
   //Uint8List? imagefile;
   Rxn<Uint8List> imagefile = Rxn<Uint8List>();
   final _db = FirebaseFirestore.instance;
@@ -123,7 +125,8 @@ class PostController extends GetxController {
     }
   }
 
-  Future<List<PostUserModel>> fetchPostWithUserDetails1() async {
+  Future<List<PostUserModel>> fetchPostWithUserDetails1(
+      {String query = ''}) async {
     isLoading.value = true;
     List<PostUserModel> postUserDetailsList = [];
     try {
@@ -131,6 +134,7 @@ class PostController extends GetxController {
       if (farmerCategoryId == null) {
         throw Exception('Farmer category ID not found');
       }
+
       final postSnapshots = await _db
           .collection("Posts")
           .where('CategoryIds', arrayContains: farmerCategoryId)
@@ -410,5 +414,19 @@ class PostController extends GetxController {
         }
       },
     );
+  }
+
+//filtering posts
+  void filterPosts(String searchTerm) {
+    List<PostUserModel> filteredPosts = postUserDetailsList.where((postUser) {
+      final post = postUser.post;
+      final user = postUser.user;
+      final postDescription = post.description.toLowerCase();
+      final username = user.username.toLowerCase();
+      final searchLower = searchTerm.toLowerCase();
+      return postDescription.contains(searchLower) ||
+          username.contains(searchLower);
+    }).toList();
+    searchResults.value = filteredPosts;
   }
 }
