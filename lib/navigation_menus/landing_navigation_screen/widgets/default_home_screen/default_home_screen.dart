@@ -10,6 +10,7 @@ import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../controllers/product_controller/product_controller.dart';
 import '../../../../models/post_user_model/post_user_model.dart';
 import '../../../../models/product_model/product_model.dart';
+import '../../../../screens/filter_posts/filter_posts.dart';
 import '../../../../screens/products/products_more.dart';
 import '../../../../utils/constants/sizes.dart';
 
@@ -36,7 +37,8 @@ class DefaultHomeScreen extends StatelessWidget {
             TPrimaryCurvedWidget(
               child: Column(
                 children: [
-                  const TSearchContainer(
+                  TSearchContainer(
+                    onTap: () => Get.to(() => const ESearchScreen()),
                     text: 'Search products',
                     icon: Iconsax.search_normal,
                   ),

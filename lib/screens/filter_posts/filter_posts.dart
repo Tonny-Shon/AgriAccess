@@ -18,7 +18,7 @@ class ESearchScreen extends StatelessWidget {
       appBar: TAppBar(
         showBackArrow: true,
         title: TextField(
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
           controller: postController.searchController,
           decoration: const InputDecoration(
             hintText: 'Search',

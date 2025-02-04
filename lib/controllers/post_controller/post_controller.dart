@@ -126,7 +126,7 @@ class PostController extends GetxController {
   }
 
   Future<List<PostUserModel>> fetchPostWithUserDetails1(
-      {String query = ''}) async {
+      ) async {
     isLoading.value = true;
     List<PostUserModel> postUserDetailsList = [];
     try {
