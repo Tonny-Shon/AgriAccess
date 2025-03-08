@@ -13,7 +13,7 @@ class TPrimaryCurvedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TClipPathWidget(
       child: Container(
-        color: Colors.green[700],
+        color: TColors.lightGrey,
         padding: const EdgeInsets.all(0),
         child: Stack(
           children: [

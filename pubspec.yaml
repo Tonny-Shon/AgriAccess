@@ -7,7 +7,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.0 <4.0.0'
+  sdk: '>=3.4.0 <4.0.0' 
 #  -----------------------------PACAKEGES-------------------------------
 dependencies:
   cached_network_image: ^3.4.1
@@ -36,8 +36,8 @@ dependencies:
   url_launcher: ^6.1.12
   uuid: ^4.5.1
 #  video_player: ^2.7.16
-  video_player: ^2.9.2
-  better_player: ^0.0.84
+#  video_player: ^2.9.2
+  better_player: ^0.0.8
   flutter_native_splash: ^2.4.1
 
 flutter_native_splash:

@@ -5,6 +5,7 @@ import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
 import '../../../../common/widgets/e_circular_image/t_circular_image.dart';
 import '../../../../controllers/user_controller/all_users_controller/all_users_controller.dart';
+import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/shimmer_effects/t_shimmer_effect/t_shimmer_effect.dart';
@@ -17,6 +18,7 @@ class AllUsersScreen extends StatelessWidget {
     final usersController = Get.put(AllUsersController());
     //final categoryController = Get.put(CategoryController());
     return Scaffold(
+      backgroundColor: TColors.softGrey,
       appBar: const TAppBar(
         showBackArrow: false,
         title: Text(
@@ -43,7 +45,7 @@ class AllUsersScreen extends StatelessWidget {
                   return TRoundedContainer(
                     padding: const EdgeInsets.all(TSizes.md),
                     showBorder: true,
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.white,
                     child: Row(
                       children: [
                         Obx(() {
@@ -63,12 +65,12 @@ class AllUsersScreen extends StatelessWidget {
                           children: [
                             Text(user.fullname,
                                 style: const TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold)),
                             Text(usersController.getCategoryName(user.role),
                                 style: const TextStyle(
-                                    fontSize: 15, color: Colors.white)),
+                                    fontSize: 15, color: Colors.black)),
                           ],
                         ),
                       ],

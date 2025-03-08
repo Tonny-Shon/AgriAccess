@@ -5,6 +5,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../models/user_model/user_model.dart';
+import '../../navigation_menus/admin/admin_menu.dart';
 import '../../navigation_menus/extension_officer/extension_officer_menu.dart';
 import '../../navigation_menus/farmer_menu/farmer_navigation_menu.dart';
 import '../../navigation_menus/input_supplier_menu/input_supplier_menu.dart';
@@ -73,6 +74,9 @@ class AuthRepository extends GetxController {
           case 'Research Officer':
             Get.offAll(() => const ResearchInnovationOfficerMenu());
             break;
+          case 'Admin':
+            Get.offAll(() => const AdminMenu());
+            break;
           default:
             Get.offAll(() => const LandingNavigationMenu());
             break;
@@ -117,6 +121,9 @@ class AuthRepository extends GetxController {
                     break;
                   case 'Research Officer':
                     Get.offAll(() => const ResearchInnovationOfficerMenu());
+                    break;
+                  case 'Admin':
+                    Get.offAll(() => const AdminMenu());
                     break;
                   default:
                     Get.offAll(() => const LandingNavigationMenu());
@@ -173,6 +180,9 @@ class AuthRepository extends GetxController {
           break;
         case 'Research Officer':
           Get.offAll(() => const ResearchInnovationOfficerMenu());
+          break;
+        case 'Admin':
+          Get.offAll(() => const AdminMenu());
           break;
         default:
           Get.offAll(() => const LandingNavigationMenu());

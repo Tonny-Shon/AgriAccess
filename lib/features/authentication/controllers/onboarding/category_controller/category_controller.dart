@@ -13,6 +13,7 @@ class CategoryController extends GetxController {
   Rx<CategoryModel?> catId = CategoryModel.empty().obs;
   final Rx<CategoryModel?> selectedCategory = Rx<CategoryModel?>(null);
   final selectedCategories = <CategoryModel>[].obs;
+  var categoryCache = <String, String>{}.obs; // Cache for category names
 
   final category = <CategoryModel>[].obs;
 
@@ -66,6 +67,31 @@ class CategoryController extends GetxController {
     } catch (e) {
       Get.snackbar('Error', e.toString());
       return CategoryModel.empty();
+    }
+  }
+
+  /// Fetch category from Firestore or return from cache
+  Future<String> getCategoryName(String categoryId) async {
+    if (categoryCache.containsKey(categoryId)) {
+      return categoryCache[categoryId]!; // Return cached category
+    }
+
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('Categories')
+          .doc(categoryId)
+          .get();
+
+      if (doc.exists) {
+        final category = CategoryModel.fromSnapshot(doc);
+        categoryCache[categoryId] = category.name; // Store in cache
+        return category.name;
+      } else {
+        return "Unknown";
+      }
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+      return "Unknown";
     }
   }
 

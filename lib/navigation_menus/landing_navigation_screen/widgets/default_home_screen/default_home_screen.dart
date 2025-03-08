@@ -37,13 +37,14 @@ class DefaultHomeScreen extends StatelessWidget {
             TPrimaryCurvedWidget(
               child: Column(
                 children: [
+                  const SizedBox(height: TSizes.sm),
                   TSearchContainer(
                     onTap: () => Get.to(() => const ESearchScreen()),
                     text: 'Search products',
                     icon: Iconsax.search_normal,
                   ),
                   const SizedBox(
-                    height: TSizes.spaceBtwSections / 3,
+                    height: TSizes.sm,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: TSizes.defaultSpace),
@@ -71,7 +72,7 @@ class DefaultHomeScreen extends StatelessWidget {
 
                             final products = productSnapshot.data!;
                             return Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.fromLTRB(8.0, 2, 8, 8),
                               child: SizedBox(
                                 height: 250,
                                 width: MediaQuery.of(context).size.width,
@@ -81,7 +82,7 @@ class DefaultHomeScreen extends StatelessWidget {
                                     TSectionHeading(
                                       title: 'Popular crops',
                                       showActionsButton: true,
-                                      textColor: Colors.white,
+                                      textColor: Colors.black,
                                       onPressed: () =>
                                           Get.to(() => const ProductsMore()),
                                     ),
