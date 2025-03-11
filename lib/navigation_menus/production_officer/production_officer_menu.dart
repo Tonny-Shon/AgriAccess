@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
-import '../../features/authentication/screens/add_user/add_user.dart';
 import '../../features/shop/screens/home/widgets/home.dart';
 import '../../navigation_screens/profile_screen.dart/profile_screen.dart';
 import '../../utils/constants/colors.dart';

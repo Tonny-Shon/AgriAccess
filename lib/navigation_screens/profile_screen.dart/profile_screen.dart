@@ -25,7 +25,7 @@ class UserProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: TAppBar(
         actions: [
-          IconButton(
+          TextButton(
             onPressed: () async {
               await deviceStorage.remove('loggedInUserId');
 
@@ -36,9 +36,23 @@ class UserProfileScreen extends StatelessWidget {
               // Redirect to login screen
               Get.offAll(() => const LandingNavigationMenu());
             },
-            icon: const Icon(
-              Icons.logout,
-              color: Colors.white,
+            child: Row(
+              children: [
+                const Text(
+                  'Logout',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                SizedBox(
+                  width: 4,
+                ),
+                Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                )
+              ],
             ),
           ),
         ],

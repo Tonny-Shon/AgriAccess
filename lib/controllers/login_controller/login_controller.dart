@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import '../../navigation_menus/admin/admin_menu.dart';
 import '../../navigation_menus/extension_officer/extension_officer_menu.dart';
 import '../../navigation_menus/farmer_menu/farmer_navigation_menu.dart';
 import '../../navigation_menus/input_supplier_menu/input_supplier_menu.dart';
@@ -88,6 +89,9 @@ class LoginController extends GetxController {
             break;
           case 'Research Officer':
             Get.offAll(() => const ResearchInnovationOfficerMenu());
+            break;
+          case 'Admin':
+            Get.offAll(() => const AdminMenu());
             break;
 
           default:
