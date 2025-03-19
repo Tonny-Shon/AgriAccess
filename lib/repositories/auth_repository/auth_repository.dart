@@ -193,13 +193,13 @@ class AuthRepository extends GetxController {
     }
   }
 
-  Future<String?> loginWithUsername(String username, String password) async {
+  Future<String?> loginWithUsername(String phoneNo, String password) async {
     try {
       // Query to fetch user by username
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance
               .collection("Users")
-              .where("UserName", isEqualTo: username)
+              .where("PhoneNumber", isEqualTo: phoneNo)
               .get();
 
       if (querySnapshot.docs.isNotEmpty) {

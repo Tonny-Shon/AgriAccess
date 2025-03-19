@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
+import '../../features/authentication/screens/create_post/create_post.dart';
+import '../../features/shop/screens/home/widgets/home.dart';
 import '../../navigation_screens/profile_screen.dart/profile_screen.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/helpers/helper_functions.dart';
@@ -23,11 +25,12 @@ class AdminMenu extends StatelessWidget {
           onDestinationSelected: (index) =>
               controller.selectedIndex.value = index,
           backgroundColor: darkMode ? TColors.black : Colors.white,
-          indicatorColor: darkMode
-              ? TColors.white.withOpacity(0.1)
-              : TColors.black.withOpacity(0.1),
+          indicatorColor: darkMode ? Colors.green[200] : Colors.green[200],
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
+            NavigationDestination(icon: Icon(Iconsax.people), label: 'Users'),
+            NavigationDestination(
+                icon: Icon(Iconsax.add_circle), label: 'Post'),
             NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
           ],
         ),
@@ -40,5 +43,10 @@ class AdminMenu extends StatelessWidget {
 class AdminMenuNavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
 
-  final screens = [const AdminAllUsersScreen(), const UserProfileScreen()];
+  final screens = [
+    const HomeScreen(),
+    const AdminAllUsersScreen(),
+    CreatePostScreen(),
+    const UserProfileScreen()
+  ];
 }

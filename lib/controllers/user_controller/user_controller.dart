@@ -25,11 +25,11 @@ class UserController extends GetxController {
 
   // UserModel? get getUser => _userModel;
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchUserRecord();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   fetchUserRecord();
+  // }
 
   Future<UserModel> fetchUserRecord() async {
     try {

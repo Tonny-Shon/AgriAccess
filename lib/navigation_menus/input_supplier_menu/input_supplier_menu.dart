@@ -3,10 +3,11 @@ import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
 import '../../features/shop/screens/home/widgets/home.dart';
 import '../../navigation_screens/profile_screen.dart/profile_screen.dart';
+import '../../screens/faqs_screen/faqs_screen.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/helpers/helper_functions.dart';
-import '../landing_navigation_screen/widgets/all_users_screen/all_users_screen.dart';
 import 'widgets/add_category.dart';
+import 'widgets/add_product_screen.dart';
 
 class InputSupplierMenu extends StatelessWidget {
   const InputSupplierMenu({super.key});
@@ -31,7 +32,10 @@ class InputSupplierMenu extends StatelessWidget {
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
             NavigationDestination(icon: Icon(Iconsax.shop), label: 'Category'),
-            NavigationDestination(icon: Icon(Iconsax.people), label: 'Users'),
+            NavigationDestination(
+                icon: Icon(Iconsax.additem), label: 'Products'),
+            NavigationDestination(
+                icon: Icon(Icons.question_mark_outlined), label: 'Faqs'),
             NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
           ],
         ),
@@ -47,7 +51,8 @@ class InputSupplierNavigationController extends GetxController {
   final screens = [
     const HomeScreen(),
     const AddProductCategory(),
-    const AllUsersScreen(),
+    const AddProductScreen(),
+    const FaqsScreen(),
     const UserProfileScreen()
   ];
 }

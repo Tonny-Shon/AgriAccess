@@ -37,6 +37,21 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<bool> isPhoneNumberUnique(String phoneNumber) async {
+    try {
+      // Query Firestore to check if the phone number already exists
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('PhoneNumber', isEqualTo: phoneNumber)
+          .get();
+
+      // If the query returns any documents, the phone number is not unique
+      return querySnapshot.docs.isEmpty;
+    } catch (e) {
+      return false; // Assume the phone number is not unique in case of an error
+    }
+  }
+
   Future<void> updateUserDetails(UserModel updateUser) async {
     try {
       String? id = await LoggedInUser.getLoggedInUser();

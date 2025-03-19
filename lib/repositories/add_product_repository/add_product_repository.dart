@@ -15,10 +15,6 @@ class AddProductRepository extends GetxController {
 
   //final _db = FirebaseFirestore.instance;
   final _storage = FirebaseStorage.instance;
-  var imageFile = Rx<Uint8List?>(null);
-  var imageFile2 = Rx<Uint8List?>(null);
-  var imageFile3 = Rx<Uint8List?>(null);
-  var imageFile4 = Rx<Uint8List?>(null);
 
   Future<String> uploadImage(Uint8List imageData, String filename) async {
     try {

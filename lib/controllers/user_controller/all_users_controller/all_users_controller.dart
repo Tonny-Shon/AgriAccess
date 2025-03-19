@@ -32,7 +32,6 @@ class AllUsersController extends GetxController {
         _calculateRoleCounts(userList);
         isLoading.value = false;
       }, onError: (error) {
-        print("Error fetching users: $error");
         isLoading.value = false;
       });
     } catch (e) {

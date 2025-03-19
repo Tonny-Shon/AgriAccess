@@ -19,7 +19,7 @@ class UserProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userController = UserController.instance;
+    final userController = Get.put(UserController());
     final categoryController = Get.put(CategoryController());
     final deviceStorage = GetStorage();
     return Scaffold(
@@ -36,9 +36,9 @@ class UserProfileScreen extends StatelessWidget {
               // Redirect to login screen
               Get.offAll(() => const LandingNavigationMenu());
             },
-            child: Row(
+            child: const Row(
               children: [
-                const Text(
+                Text(
                   'Logout',
                   style: TextStyle(
                       fontSize: 18,
@@ -181,26 +181,7 @@ class UserProfileScreen extends StatelessWidget {
 
                             const SizedBox(height: TSizes.spaceBtwItems),
                             const Divider(),
-                            // Center(
-                            //   child: TextButton(
-                            //     onPressed: () {},
-                            //     //=> controller.deleteAccountWarningPopup(),
-                            //     child: const Text(
-                            //       'Close Account',
-                            //       style: TextStyle(color: Colors.red),
-                            //     ),
-                            //   ),
-                            // ),
-                            // SizedBox(
-                            //   width: double.infinity,
-                            //   child: OutlinedButton(
-                            //     style: OutlinedButton.styleFrom(
-                            //         side: const BorderSide(color: Colors.green)),
-                            //     onPressed: () {},
-                            //     //AuthenticationRepository.instance.logout(),
-                            //     child: const Text('Logout'),
-                            //   ),
-                            // ),
+
                             const SizedBox(
                               height: TSizes.spaceBtwSections * 2.5,
                             ),

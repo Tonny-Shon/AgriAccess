@@ -3,9 +3,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
 import '../../features/shop/screens/home/widgets/home.dart';
 import '../../navigation_screens/profile_screen.dart/profile_screen.dart';
+import '../../screens/faqs_screen/faqs_screen.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/helpers/helper_functions.dart';
-import '../landing_navigation_screen/widgets/all_users_screen/all_users_screen.dart';
 
 class ExtensionOfficerMenu extends StatelessWidget {
   const ExtensionOfficerMenu({super.key});
@@ -29,7 +29,8 @@ class ExtensionOfficerMenu extends StatelessWidget {
               : TColors.black.withOpacity(0.1),
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
-            NavigationDestination(icon: Icon(Iconsax.shop), label: 'Shop'),
+            NavigationDestination(
+                icon: Icon(Icons.question_mark_outlined), label: 'Faqs'),
             NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
           ],
         ),
@@ -44,7 +45,7 @@ class ExtensionOfficerNavigationController extends GetxController {
 
   final screens = [
     const HomeScreen(),
-    const AllUsersScreen(),
+    const FaqsScreen(),
     const UserProfileScreen()
   ];
 }

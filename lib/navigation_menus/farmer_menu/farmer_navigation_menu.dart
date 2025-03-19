@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
+import '../../features/authentication/screens/create_post/create_post.dart';
 import '../../features/shop/screens/home/widgets/home.dart';
 import '../../navigation_screens/profile_screen.dart/profile_screen.dart';
+import '../../screens/faqs_screen/faqs_screen.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/helpers/helper_functions.dart';
-import '../landing_navigation_screen/widgets/all_users_screen/all_users_screen.dart';
 
 class FarmerNavigationMenu extends StatelessWidget {
   const FarmerNavigationMenu({super.key});
@@ -30,7 +31,9 @@ class FarmerNavigationMenu extends StatelessWidget {
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
             NavigationDestination(
-                icon: Icon(Iconsax.people), label: 'My Network'),
+                icon: Icon(Iconsax.add_circle), label: 'Post'),
+            NavigationDestination(
+                icon: Icon(Icons.question_mark_outlined), label: 'Faqs'),
             NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
           ],
         ),
@@ -45,7 +48,8 @@ class FarmerNavigationController extends GetxController {
 
   final screens = [
     const HomeScreen(),
-    const AllUsersScreen(),
+    CreatePostScreen(),
+    const FaqsScreen(),
     const UserProfileScreen()
   ];
 }

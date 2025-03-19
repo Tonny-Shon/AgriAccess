@@ -3,9 +3,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
 import '../../features/shop/screens/home/widgets/home.dart';
 import '../../navigation_screens/profile_screen.dart/profile_screen.dart';
+import '../../screens/faqs_screen/faqs_screen.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/helpers/helper_functions.dart';
-import '../landing_navigation_screen/widgets/all_users_screen/all_users_screen.dart';
 
 class ProductionOfficerMenu extends StatelessWidget {
   const ProductionOfficerMenu({super.key});
@@ -30,7 +30,8 @@ class ProductionOfficerMenu extends StatelessWidget {
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
             //NavigationDestination(icon: Icon(Iconsax.pen_add), label: 'Post'),
-            NavigationDestination(icon: Icon(Iconsax.user_add), label: 'Users'),
+            NavigationDestination(
+                icon: Icon(Icons.question_mark_outlined), label: 'Faqs'),
             NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
           ],
         ),
@@ -47,7 +48,7 @@ class ProductionOfficerNavigationController extends GetxController {
     const HomeScreen(),
     //const CreatePostScreen(),
     // const AddUserScreen(),
-    const AllUsersScreen(),
+    const FaqsScreen(),
     const UserProfileScreen()
   ];
 }

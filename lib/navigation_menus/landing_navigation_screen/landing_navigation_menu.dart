@@ -1,3 +1,4 @@
+import 'package:agriaccess/screens/faqs_screen/faqs_screen.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
@@ -37,10 +38,10 @@ class LandingNavigationMenu extends StatelessWidget {
                 label: 'Home'),
             NavigationDestination(
               icon: Icon(
-                Iconsax.people,
+                Icons.question_mark_outlined,
                 color: Colors.green,
               ),
-              label: 'My Network',
+              label: 'Faqs',
             ),
             NavigationDestination(
                 icon: Icon(
@@ -61,7 +62,7 @@ class LandingNavigationController extends GetxController {
 
   final screens = [
     const DefaultHomeScreen(),
-    const landing_menu.AllUsersScreen(),
+    const FaqsScreen(),
     const LoginScreen(),
     //const UserProfileScreen()
   ];

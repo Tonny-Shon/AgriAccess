@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:agriaccess/features/authentication/screens/login/login.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
+
 import '../../features/authentication/controllers/onboarding/category_controller/category_controller.dart';
 import '../../models/category_model/category_model.dart';
 import '../../models/user_model/user_model.dart';
@@ -29,6 +29,8 @@ class SignupController extends GetxController {
   GlobalKey<FormState> signupFormkey = GlobalKey<FormState>();
   GlobalKey<FormState> signupFormkey1 = GlobalKey<FormState>();
 
+  final userRepository = Get.put(UserRepository());
+
   String hashPassword(String password) {
     var bytes = utf8.encode(password); // data being hashed
     var digest = sha256.convert(bytes); // using sha256
@@ -38,13 +40,20 @@ class SignupController extends GetxController {
   Future<void> signupuser() async {
     try {
       if (!signupFormkey1.currentState!.validate()) return;
-      // if (!privacyPolicy.value) {
-      //   TLoaders.warningSnackBar(
-      //       title: "Accept Privacy Policy",
-      //       message:
-      //           "In order to create an account, you must have to read and accept the privacy policy and terms of use.");
-      //   return;
-      // }
+
+      final phoneNo = phoneNumber.text.trim();
+
+      final isPhoneUnique =
+          await UserRepository.instance.isPhoneNumberUnique(phoneNo);
+
+      if (!isPhoneUnique) {
+        TLoaders.warningSnackBar(
+          title: "Phone Number Already Exists",
+          message:
+              "The phone number is already associated with another account.",
+        );
+        return;
+      }
       isLoading.value = true;
       String selectedCategoryId =
           await _categoryController.getFarmerCategoryId();
@@ -56,7 +65,7 @@ class SignupController extends GetxController {
           lastname: lastname.text.trim(),
           username: username.text.trim(),
           password: hashedpassword,
-          phoneNumber: phoneNumber.text.trim(),
+          phoneNumber: phoneNo,
           profilePic: '',
           role: selectedCategoryId
           //selectedRole.value
@@ -74,7 +83,7 @@ class SignupController extends GetxController {
           title: 'Congratulations',
           message: 'Your account has been created! Login to continue.');
 
-      Get.offAll(() => const LoginScreen());
+      Get.back();
 
       firstname.clear();
       lastname.clear();
@@ -93,15 +102,21 @@ class SignupController extends GetxController {
   Future<void> createUserAccount(CategoryModel category) async {
     try {
       if (!signupFormkey.currentState!.validate()) return;
-      // if (!privacyPolicy.value) {
-      //   TLoaders.warningSnackBar(
-      //       title: "Accept Privacy Policy",
-      //       message:
-      //           "In order to create an account, you must have to read and accept the privacy policy and terms of use.");
-      //   return;
-      // }
-      // String selectedCategoryId =
-      //     await _categoryController.getFarmerCategoryId();
+
+      final phoneNo = phoneNumber.text.trim();
+
+      final isPhoneUnique =
+          await UserRepository.instance.isPhoneNumberUnique(phoneNo);
+
+      if (!isPhoneUnique) {
+        TLoaders.warningSnackBar(
+          title: "Phone Number Already Exists",
+          message:
+              "The phone number is already associated with another account.",
+        );
+        return;
+      }
+
       isLoading.value = true;
       String hashedpassword = hashPassword(password.text.trim());
       final newUser = UserModel(
@@ -110,14 +125,12 @@ class SignupController extends GetxController {
           lastname: lastname.text.trim(),
           username: username.text.trim(),
           password: hashedpassword,
-          phoneNumber: phoneNumber.text.trim(),
+          phoneNumber: phoneNo,
           profilePic: '',
           role: category.id
           //selectedRole.value
 
           );
-
-      final userRepository = Get.put(UserRepository());
 
       // Ensure it's not null
 
@@ -139,6 +152,17 @@ class SignupController extends GetxController {
       isLoading.value = false;
     } catch (e) {
       TLoaders.erroSnackBar(title: "Error", message: e.toString());
+    }
+  }
+
+  Future<bool> isPhoneNumberUnique(String phoneNumber) async {
+    try {
+      // Access the 'users' collection in Firestore
+      await userRepository.isPhoneNumberUnique(phoneNumber);
+
+      return true;
+    } catch (error) {
+      throw Exception("An error occurred: $error");
     }
   }
 }

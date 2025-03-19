@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:agriaccess/controllers/user_controller/user_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,13 +19,16 @@ class PostController extends GetxController {
   final postRepository = Get.put(PostRepository());
   final storageMethods = Get.put(StorageMethods());
   final categoryController = Get.put(CategoryController());
+  final userController = Get.put(UserController());
   final isLoading = false.obs;
   final commentLen = 0.obs;
   final isVideo = false.obs;
   final videoPath = ''.obs;
   final imagePath = ''.obs;
+  final RxString errorMessage = ''.obs;
   //var posts = <PostUserModel>[].obs;
   var postUserDetailsList = <PostUserModel>[].obs;
+  final posts = <PostUserModel>[].obs;
   RxList<PostUserModel> searchResults = <PostUserModel>[].obs;
 
   final descriptionController = TextEditingController();
@@ -34,6 +38,33 @@ class PostController extends GetxController {
   final _db = FirebaseFirestore.instance;
 
   //final posts = <Post>[].obs;
+  @override
+  void onInit() {
+    super.onInit();
+    fetchPosts(); // Fetch posts when controller initializes
+  }
+
+  Future<void> fetchPosts() async {
+    try {
+      isLoading.value = true;
+      errorMessage.value = '';
+
+      // Fetch user record
+      final user = await userController.fetchUserRecord();
+
+      // Fetch posts with user details
+      final fetchedPosts = await fetchPostWithUserDetails(user.role);
+      posts.assignAll(fetchedPosts); // Update reactive list
+    } catch (e) {
+      errorMessage.value = 'Error fetching posts: $e';
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void refreshPosts() {
+    fetchPosts();
+  }
 
   Future<List<PostUserModel>> fetchPostWithUserDetails(
       String requiredRole) async {
@@ -68,45 +99,6 @@ class PostController extends GetxController {
     }
   }
 
-  // refreshing the posts
-  Future<List<PostUserModel>> refreshPosts(String requiredRole) async {
-    isLoading.value = true;
-    postUserDetailsList.clear();
-    //List<PostUserModel> postUserDetailsList = [];
-    try {
-      // final postSnapshots = await _db.collection("Posts").get();
-      // List<Post> posts =
-      //     postSnapshots.docs.map((doc) => Post.fromSnap(doc)).toList();
-      final postSnapshots = await _db
-          .collection("Posts")
-          .where("CategoryIds",
-              arrayContains:
-                  requiredRole) // Filter posts by categoryId matching user role
-          .get();
-
-      List<Post> posts =
-          postSnapshots.docs.map((doc) => Post.fromSnap(doc)).toList();
-
-      //List<PostUserModel> postUserDetailsList = [];
-      for (var post in posts) {
-        final userSnapshot = await _db.collection("Users").doc(post.uid).get();
-        if (userSnapshot.exists) {
-          UserModel user = UserModel.fromSnapshot(userSnapshot);
-          // if (user.role == requiredRole) {
-          //   postUserDetailsList.add(PostUserModel(post: post, user: user));
-          // }
-          postUserDetailsList.add(PostUserModel(post: post, user: user));
-        }
-      }
-      return postUserDetailsList;
-    } catch (e) {
-      Get.snackbar('Error', e.toString());
-      return [];
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
   Future<String?> fetchFarmerCategoryId() async {
     try {
       final querySnapshot = await _db
@@ -125,8 +117,25 @@ class PostController extends GetxController {
     }
   }
 
-  Future<List<PostUserModel>> fetchPostWithUserDetails1(
-      ) async {
+  Future<String?> fetchAdminCategoryId() async {
+    try {
+      final querySnapshot = await _db
+          .collection("Categories")
+          .where('Name', isEqualTo: 'Admin')
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.first.id;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<List<PostUserModel>> fetchPostWithUserDetails1() async {
     isLoading.value = true;
     List<PostUserModel> postUserDetailsList = [];
     try {
@@ -135,10 +144,11 @@ class PostController extends GetxController {
         throw Exception('Farmer category ID not found');
       }
 
-      final postSnapshots = await _db
-          .collection("Posts")
-          .where('CategoryIds', arrayContains: farmerCategoryId)
-          .get();
+      // final postSnapshots = await _db
+      //     .collection("Posts")
+      //     .where('CategoryIds', arrayContains: farmerCategoryId)
+      //     .get();
+      final postSnapshots = await _db.collection("Posts").get();
       List<Post> posts =
           postSnapshots.docs.map((doc) => Post.fromSnap(doc)).toList();
 
@@ -163,9 +173,17 @@ class PostController extends GetxController {
       List<String> selectedCategories, bool isVideo) async {
     try {
       isLoading.value = true;
+      final adminCategoryId = await fetchAdminCategoryId();
+
+      // If the user is an Admin and adminCategoryId exists, add it to selectedCategories
+      if (adminCategoryId != null) {
+        if (!selectedCategories.contains(adminCategoryId)) {
+          selectedCategories.add(adminCategoryId);
+        }
+      }
       await uploadImagePost(descriptionController.text, imagefile.value!, uid,
           username, profileImage, selectedCategories, isVideo);
-
+      refreshPosts();
       isLoading.value = false;
       descriptionController.text = "";
       imagefile.value = null;
@@ -182,8 +200,17 @@ class PostController extends GetxController {
       List<String> selectedCategories, bool isVideo) async {
     try {
       isLoading.value = true;
+      final adminCategoryId = await fetchAdminCategoryId();
+
+      // If the user is an Admin and adminCategoryId exists, add it to selectedCategories
+      if (adminCategoryId != null) {
+        if (!selectedCategories.contains(adminCategoryId)) {
+          selectedCategories.add(adminCategoryId);
+        }
+      }
       await uploadTextPost(descriptionController.text, uid, username,
           profileImage, selectedCategories, isVideo);
+      refreshPosts();
       isLoading.value = false;
       descriptionController.text = "";
       imagefile.value = null;
@@ -379,7 +406,6 @@ class PostController extends GetxController {
 
 //dialog for deleting a post
   void showDeleteConfirmationDialog(
-    BuildContext context,
     String postId,
   ) {
     Get.defaultDialog(
@@ -404,6 +430,7 @@ class PostController extends GetxController {
             backgroundColor: Colors.green,
             colorText: Colors.white,
           );
+          refreshPosts();
         } catch (e) {
           Get.snackbar(
             "Error",

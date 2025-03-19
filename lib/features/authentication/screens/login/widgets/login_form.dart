@@ -25,12 +25,11 @@ class TLoginForm extends StatelessWidget {
           children: [
             ///Email
             TextFormField(
-              controller: loginController.username,
+              controller: loginController.phone,
               validator: (value) =>
-                  TValidator.validateEmptyText('Username', value),
+                  TValidator.validateEmptyText('Phone', value),
               decoration: const InputDecoration(
-                  prefixIcon: Icon(Iconsax.direct_right),
-                  labelText: TTexts.username),
+                  prefixIcon: Icon(Icons.phone), labelText: TTexts.phoneNo),
             ),
             const SizedBox(height: TSizes.spaceBtwinputFields),
 

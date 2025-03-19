@@ -16,7 +16,7 @@ class LoginController extends GetxController {
   final hidePassword = true.obs;
   final isLoading = false.obs;
   final localStorage = GetStorage();
-  final username = TextEditingController();
+  final phone = TextEditingController();
   final password = TextEditingController();
   GlobalKey<FormState> loginformKey = GlobalKey<FormState>();
   //final userController = Get.put(UserController());
@@ -24,7 +24,7 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    username.text = localStorage.read("REMEMBER_ME_NAME") ?? '';
+    phone.text = localStorage.read("REMEMBER_ME_PHONE") ?? '';
     password.text = localStorage.read("REMEMBER_ME_PASSWORD") ?? '';
   }
 
@@ -34,12 +34,12 @@ class LoginController extends GetxController {
       if (!loginformKey.currentState!.validate()) return;
 
       if (rememberMe.value) {
-        localStorage.read("REMEMBER_ME_NAME") ?? '';
+        localStorage.read("REMEMBER_ME_PHONE") ?? '';
         localStorage.read("REMEMBER_ME_PASSWORD") ?? '';
       }
 
       String? loginResult = await AuthRepository.instance
-          .loginWithUsername(username.text.trim(), password.text.trim());
+          .loginWithUsername(phone.text.trim(), password.text.trim());
 
       if (loginResult != null) {
         // Handle login failure (e.g., incorrect credentials)

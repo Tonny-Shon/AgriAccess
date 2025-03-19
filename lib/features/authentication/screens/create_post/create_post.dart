@@ -26,7 +26,7 @@ class CreatePostScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: const TAppBar(
-        showBackArrow: true,
+        showBackArrow: false,
         title: Text(
           'Create a post',
           style: TextStyle(color: Colors.white),
@@ -171,11 +171,25 @@ class CreatePostScreen extends StatelessWidget {
                             SizedBox(
                               height: 250,
                               child: ListView.builder(
-                                itemCount:
-                                    categoryController.allCategories.length,
+                                itemCount: categoryController.allCategories
+                                    .where((category) =>
+                                        category.name !=
+                                        'Admin') // Filter out "Admin"
+                                    .length,
                                 itemBuilder: (context, index) {
-                                  final category =
-                                      categoryController.allCategories[index];
+                                  // Get the filtered list of categories
+                                  final filteredCategories = categoryController
+                                      .allCategories
+                                      .where((category) =>
+                                          category.name != 'Admin')
+                                      .toList();
+
+                                  // Get the category at the current index
+                                  final category = filteredCategories[index];
+                                  final isSelected = categoryController
+                                      .selectedCategories
+                                      .contains(category);
+
                                   return Obx(
                                     () => CheckboxListTile(
                                       title: Text(category.name),
@@ -186,6 +200,15 @@ class CreatePostScreen extends StatelessWidget {
                                         categoryController
                                             .toggleCategorySelection(category);
                                       },
+                                      activeColor: Colors
+                                          .green, // Change checkbox color to green when selected
+                                      tileColor: isSelected
+                                          ? Colors.green.withOpacity(
+                                              0.2) // Light green background when selected
+                                          : null, // Default background when not selected
+                                      selectedTileColor: Colors.green.withOpacity(
+                                          0.2), // Ensure selected state is consistent
+                                      selected: isSelected,
                                     ),
                                   );
                                 },
@@ -211,10 +234,6 @@ class CreatePostScreen extends StatelessWidget {
 
                       return Column(
                         children: [
-                          // Show LinearProgressIndicator if loading
-                          // if (postController.isLoading.value)
-                          //   const LinearProgressIndicator(),
-
                           Obx(
                             () => ElevatedButton(
                               onPressed: () async {
